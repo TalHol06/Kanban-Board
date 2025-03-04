@@ -10,7 +10,7 @@ export const login = async (req: Request, res: Response) => {
   try {
     const { username, password } = req.body;
 
-    const user = await User.findOne({ where: username });
+    const user = await User.findOne({ where: { username } });
     if (!user){
       return res.status(401).json({ message: 'Invalud email or password' });
     }

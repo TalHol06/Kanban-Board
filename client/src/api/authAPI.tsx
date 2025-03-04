@@ -2,23 +2,22 @@ import { UserLogin } from "../interfaces/UserLogin";
 
 const login = async (userInfo: UserLogin) => {
   try {
-    const response = await fetch('/login', {
+    const response = await fetch('/auth/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(userInfo);
+      body: JSON.stringify(userInfo)
     });
 
     if (!response.ok){
-      throw new Error('Failed to log in');
+      const error = await response.text();
+      throw new Error('Failed to log in: ' +error);
     }
 
     const data = await response.json();
-    if (data.token){
-      localStorage.setItem('id_token', data.token);
-      window.location.assign('/');
-    }
+    console.log(data);
+    return data;
   } catch (err: any) {
     console.error("Login error: " +err);
   }
