@@ -1,6 +1,7 @@
 import { JwtPayload, jwtDecode } from 'jwt-decode';
 
 class AuthService {
+  
   getProfile() {
     // TODO: return the decoded token
     const token = this.getToken();
@@ -51,7 +52,10 @@ class AuthService {
     // TODO: remove the token from localStorage
     // TODO: redirect to the login page
     localStorage.removeItem('id_token');
-    window.location.assign('/login');
+    if (process.env.NODE_ENV != 'production'){
+      window.location.assign(`/login`);
+    }
+
   }
 }
 
